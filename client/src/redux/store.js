@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -11,6 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
+import authSlice from "./auth/authSlice";
 
 const persistConfig = {
   key: "root",
@@ -19,7 +20,8 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
-  //...
+  auth:authSlice,
+  
 });
 const persistedReducer = persistReducer(persistConfig, reducers);
 const store = configureStore({
