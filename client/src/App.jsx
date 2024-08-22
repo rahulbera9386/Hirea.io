@@ -1,23 +1,23 @@
 import React from "react";
-import { Button } from "@/components/ui/button"
 import {
   createBrowserRouter,
   RouterProvider,
   Route,
   Link,
-} from "react-router-dom"
+} from "react-router-dom";
+import Home from "./components/home/Home";
 
-const router = createBrowserRouter([{
-  path:"/",
-  element:(<div> <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    <Button className="mt-6">Click me</Button>
-    </div>)
-}])
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+]);
 
 const App = () => {
   return (
     <div>
-     <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </div>
   );
 };
