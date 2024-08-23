@@ -4,6 +4,10 @@ import cookieParser from "cookie-parser";
 import cors from "cors"
 import dbConnection from "./utills/db.js";
 import userRoute from "./routes/user.route.js"
+import companyRouter from "./routes/company.route.js"
+
+
+
 
 const app=express();
 dotenv.config();
@@ -22,7 +26,8 @@ app.use(cors(corsOptions));
 
 
 //Api
-app.use("/api/user",userRoute)
+app.use("/api/user",userRoute);
+app.use("/api/company",companyRouter)
 
 app.listen(process.env.PORT,()=>{
     console.log(`Listening on Port:${process.env.PORT}`)
