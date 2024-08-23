@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import dbConnection from "./utills/db.js";
-
+import userRoute from "./routes/user.route.js"
 
 const app=express();
 dotenv.config();
@@ -18,6 +18,11 @@ const corsOptions={
     credentials:true
 }
 app.use(cors(corsOptions));
+
+
+
+//Api
+app.use("/api/user",userRoute)
 
 app.listen(process.env.PORT,()=>{
     console.log(`Listening on Port:${process.env.PORT}`)
