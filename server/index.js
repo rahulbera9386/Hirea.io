@@ -6,7 +6,7 @@ import dbConnection from "./utills/db.js";
 import userRoute from "./routes/user.route.js"
 import companyRoute from "./routes/company.route.js"
 import jobsRoute from "./routes/job.route.js"
-
+import applicationRoute from "./routes/application.route.js"
 
 
 const app=express();
@@ -28,7 +28,8 @@ app.use(cors(corsOptions));
 //Api
 app.use("/api/user",userRoute);
 app.use("/api/company",companyRoute);
-app.use("/api/jobs",jobsRoute)
+app.use("/api/jobs",jobsRoute);
+app.use("/api/application",applicationRoute)
 
 app.listen(process.env.PORT,()=>{
     console.log(`Listening on Port:${process.env.PORT}`)
