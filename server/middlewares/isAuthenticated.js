@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"
+import User from './../models/user.model.js';
 
 
 const isAuthenticated=async(req,res,next)=>{
@@ -16,6 +17,9 @@ if(!decode)
 
 //console.log(decode);
 req.id=decode.userId;
+
+const user=await User.findById(decode.userId);
+req.user=user;
 next();
 }
     
