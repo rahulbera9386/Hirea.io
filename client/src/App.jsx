@@ -1,11 +1,12 @@
 import React from "react";
 import {
+
   createBrowserRouter,
   RouterProvider,
   Route,
   Link,
 } from "react-router-dom";
-import Home from "./components/home/Home";
+import Home from './components/shared/home/Home';
 
 const router = createBrowserRouter([
   {
