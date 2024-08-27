@@ -6,40 +6,42 @@ import jwt from "jsonwebtoken";
 const signup = async (req, res) => {
   try {
     const { fullName, email, password, phoneNumber, role } = req.body;
-
+    // console.log("Received data:", req.body);
+    // console.log("Received file:", req.file);
+  
     if (!fullName) {
-      res.status(400).json({
+     return res.status(400).json({
         message: "Please Enter Your Full Name",
         success: false,
       });
     }
     if (!email) {
-      res.status(400).json({
+     return res.status(400).json({
         message: "Please Enter Your Email",
         success: false,
       });
     }
     if (!password) {
-      res.status(400).json({
+     return res.status(400).json({
         message: "Please Enter Password",
         success: false,
       });
     }
     if (!phoneNumber) {
-      res.status(400).json({
+      return  res.status(400).json({
         message: "Please Enter Your Contact Number",
         success: false,
       });
     }
     if (!role) {
-      res.status(400).json({
+      return   res.status(400).json({
         message: "Please Enter Role",
         success: false,
       });
     }
     let profilePhotoUrl = null;
     if (req.file) {
-      const file = req.file;
+    const file = req.file;
       const fileUri = getDataUri(file);
       const cloudinaryResponse = await cloudinary.uploader.upload(
         fileUri.content
@@ -48,14 +50,14 @@ const signup = async (req, res) => {
     }
     const user = await User.findOne({ email });
     if (user) {
-      res.status(400).json({
+      return  res.status(400).json({
         message: "User Exists With Similar Email",
         success: false,
       });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({
+    const newUser = await User.create({
       fullName,
       email,
       phoneNumber,
@@ -65,8 +67,8 @@ const signup = async (req, res) => {
         profilePhoto: profilePhotoUrl,
       },
     });
-    await newUser.save();
-    res.status(201).json({
+    //await newUser.save();
+   res.status(201).json({
       message: "User created successfully",
       user: newUser,
       success: true,
@@ -83,40 +85,41 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
+    //console.log("Data From Client side",req.body)
     if (!email) {
-      res.status(400).json({
+     return  res.status(400).json({
         message: "Please Enter Your Email",
         success: false,
       });
     }
     if (!password) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Please Enter Password",
         success: false,
       });
     }
     if (!role) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Please Enter Role",
         success: false,
       });
     }
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "User does not exist.Please SignUp",
         success: false,
       });
     }
-    const passwordMatch = bcrypt.compare(password, existingUser.password);
+    const passwordMatch =await bcrypt.compare(password, existingUser.password);
     if (!passwordMatch) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Please Enter Correct Password",
         success: false,
       });
     }
     if (role != existingUser.role) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "User with this role does not exist",
         success: false,
       });
@@ -124,9 +127,10 @@ const login = async (req, res) => {
 
     const user = {
       _id: existingUser._id,
-      fullname: existingUser.fullname,
+      fullName: existingUser.fullname,
       email: existingUser.email,
       phoneNumber: existingUser.phoneNumber,
+     
       role: existingUser.role,
       profile: existingUser.profile,
     };
@@ -140,8 +144,9 @@ const login = async (req, res) => {
       .cookie("token", token, { httpOnly: true, sameSite: "strict" })
       .json({
         message: `Welcome Back ${existingUser.fullName}`,
-        success: true,
         user,
+        success: true,
+        
       });
   } catch (error) {
     res

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -7,6 +7,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import axios from "axios";
+import { USER_API_END_POINT } from "./../../../utills/constant";
+import { setUser } from '../../../redux/auth/authSlice';
 
 const Navbar = () => {
   const navLinks = [
@@ -14,8 +19,26 @@ const Navbar = () => {
     { name: "Jobs", path: "/jobs" },
     { name: "Browse", path: "/browse" },
   ];
-  const user = false;
-
+  // const user = false;
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  //console.log(user);
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+      const apiData = res.data;
+      if (apiData.success) {
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(apiData.message);
+      }
+    } catch (error) {
+      toast.error(error.reponse.data.message);
+    }
+  };
   return (
     <nav className="bg-white sticky top-0 p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -51,8 +74,8 @@ const Navbar = () => {
               <Popover>
                 <PopoverTrigger>
                   <Avatar className="cursor-pointer">
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src={user.profile.profilePhoto} />
+                    <AvatarFallback>Rahul</AvatarFallback>
                   </Avatar>
                 </PopoverTrigger>
                 <PopoverContent className="p-4">
@@ -60,17 +83,21 @@ const Navbar = () => {
                     <Button variant="ghost" as={Link} to="/profile">
                       View Profile
                     </Button>
-                    <Button variant="outline">Logout</Button>
+                    <Button variant="outline" onClick={logoutHandler}>
+                      Logout
+                    </Button>
                   </div>
                 </PopoverContent>
               </Popover>
             ) : (
               <div className="flex space-x-4">
                 <Button variant="secondary" className="">
-                  Login
+                  <Link to="/login">Login</Link>
                 </Button>
 
-                <Button>SignUp</Button>
+                <Button>
+                  <Link to="/signup"> SignUp</Link>
+                </Button>
               </div>
             )}
           </div>
