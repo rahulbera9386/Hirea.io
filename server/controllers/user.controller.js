@@ -44,7 +44,9 @@ const signup = async (req, res) => {
     const file = req.file;
       const fileUri = getDataUri(file);
       const cloudinaryResponse = await cloudinary.uploader.upload(
-        fileUri.content
+        fileUri.content, {
+          folder: 'Hirea.io/Profile Photo'
+        }
       );
       profilePhotoUrl = cloudinaryResponse.secure_url;
     }
@@ -127,7 +129,7 @@ const login = async (req, res) => {
 
     const user = {
       _id: existingUser._id,
-      fullName: existingUser.fullname,
+      fullName: existingUser.fullName,
       email: existingUser.email,
       phoneNumber: existingUser.phoneNumber,
      
@@ -172,6 +174,8 @@ const updateProfile = async (req, res) => {
   try {
     const { fullName, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
+    //console.log(req.body);
+    //console.log(req.file);
 
     const userId = req.id;
     const user = await User.findById(userId);
@@ -212,7 +216,7 @@ const updateProfile = async (req, res) => {
     if (file) {
       const fileUri = getDataUri(file);
       const cloudinaryResponse = await cloudinary.uploader.upload(
-        fileUri.content
+        fileUri.content,{folder: 'Hirea.io/Resume'}
       );
 
       

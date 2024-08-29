@@ -40,11 +40,11 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post(`${USER_API_END_POINT}/signup`, input, {
+      const res = await axios.post(`${USER_API_END_POINT}/signup`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
-      console.log(res);
+      //console.log(res);
       const apiData = res.data;
 
       if (apiData.success) {

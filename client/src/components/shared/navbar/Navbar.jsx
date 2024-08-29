@@ -40,7 +40,7 @@ const Navbar = () => {
     }
   };
   return (
-    <nav className="bg-white sticky top-0 p-4">
+    <nav className="bg-white sticky top-0 p-4 z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Left side */}
         <div className="text-2xl font-bold text-gray-800">
