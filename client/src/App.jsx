@@ -8,9 +8,11 @@ import {
 import Home from "./components/shared/home/Home";
 import Signup from "./components/shared/signup/Signup";
 import Login from "./components/shared/login/login";
-import Job from "./components/shared/jobs/job";
 import Browse from "./components/shared/browse/Browse";
 import Profile from "./components/shared/profile/Profile";
+import Job from "./components/shared/jobs/Job";
+import JobDescription from "./components/shared/jobdescription/JobDescription";
+
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,12 @@ const router = createBrowserRouter([
   {
     path:"/profile",
     element:<Profile/>
+  },
+  {
+path:"/description/:id",
+element:<JobDescription/>
+  },{
+    
   }
 ]);
 

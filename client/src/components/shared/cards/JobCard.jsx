@@ -1,15 +1,19 @@
-import { Bookmark } from 'lucide-react';
 import React from 'react';
+import { Bookmark } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from '@/components/ui/badge';
+import { useNavigate } from 'react-router-dom'; 
 
 const JobCard = () => {
+  const jobId = "rahulbera9932gmailcom";
+  const navigate = useNavigate(); 
+
   return (
-    <div className="bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2 hover:scale-105  ease-in-out ">
+    <div className="bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden cursor-pointer transition-transform transform hover:-translate-y-2 hover:scale-105  ease-in-out">
       <div className="flex justify-between items-center p-3 border-b border-gray-200 bg-gray-50">
         <p className="text-gray-500 text-xs">2 days ago</p>
-        <Button className="p-1  hover:bg-none bg-white border">
+        <Button className="p-1 hover:bg-none bg-white border">
           <Bookmark className="text-gray-700" />
         </Button>
       </div>
@@ -33,8 +37,8 @@ const JobCard = () => {
         <Badge className="bg-purple-100 text-purple-700 font-semibold py-1 px-2 text-xs">12 LPA</Badge>
       </div>
       <div className="p-3 flex justify-between border-t border-gray-200 bg-gray-50">
-        <Button className="bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300 py-1 px-3 text-sm rounded-lg">Details</Button>
-        <Button className="bg-gray-300 text-gray-800 hover:bg-gray-400 transition-colors duration-300 py-1 px-3 text-sm rounded-lg">Save For Later</Button>
+        <Button onClick={() => navigate(`/description/${jobId}`)} variant="outline">Details</Button>
+        <Button className="bg-[#7209b7]">Save For Later</Button>
       </div>
     </div>
   );

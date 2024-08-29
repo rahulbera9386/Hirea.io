@@ -59,9 +59,11 @@ const Profile = () => {
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">Skills</h2>
           <div className="flex flex-wrap gap-2">
             {skillsData.map((item, index) => (
-              <Badge key={index} className="bg-blue-100 text-blue-800">
+              
+              <Badge key={index} className="">
                 {item}
               </Badge>
+
             ))}
           </div>
         </div>
