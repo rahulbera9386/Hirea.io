@@ -81,7 +81,8 @@ const Navbar = () => {
                 <PopoverContent className="p-4">
                   <div className="flex flex-col space-y-2">
                     <Button variant="ghost" as={Link} to="/profile">
-                      View Profile
+                    <Link to="/profile">View Profile</Link>
+                      
                     </Button>
                     <Button variant="outline" onClick={logoutHandler}>
                       Logout

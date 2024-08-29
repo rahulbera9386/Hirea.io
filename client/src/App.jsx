@@ -10,6 +10,7 @@ import Signup from "./components/shared/signup/Signup";
 import Login from "./components/shared/login/login";
 import Job from "./components/shared/jobs/job";
 import Browse from "./components/shared/browse/Browse";
+import Profile from "./components/shared/profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   ,{
     path:"/browse",
     element:<Browse/>
+  },
+  {
+    path:"/profile",
+    element:<Profile/>
   }
 ]);
 
