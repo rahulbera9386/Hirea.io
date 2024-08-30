@@ -57,9 +57,10 @@ const UpdateProfile = ({ open, setOpen }) => {
       const apiData = res.data;
       //console.log(apiData);
       if (apiData.success) {
-        dispatch(setUser(apiData.user));
+        dispatch(setUser(apiData.userData));
         toast.success(apiData.message);
         setOpen(false);
+        console.log(user)
       }
     } catch (error) {
       console.log("error", error);
@@ -143,10 +144,11 @@ const UpdateProfile = ({ open, setOpen }) => {
                 id="file"
                 name="file"
                 type="file"
+              
                 onChange={(e) =>
                   setInput({ ...input, file: e.target.files[0] })
                 }
-                accept=".pdf"
+                accept="application/pdf"
               />
             </div>
             <div className="text-center">

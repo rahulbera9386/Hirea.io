@@ -216,7 +216,14 @@ const updateProfile = async (req, res) => {
     if (file) {
       const fileUri = getDataUri(file);
       const cloudinaryResponse = await cloudinary.uploader.upload(
-        fileUri.content,{folder: 'Hirea.io/Resume'}
+        fileUri.content,{
+          resource_type: 'image',
+          transformation: [
+            { page: 1 },
+            { width: 300, crop: "scale" }
+          ],
+          folder: 'Hirea.io/Resume'
+        }
       );
 
       

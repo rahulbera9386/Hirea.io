@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom'; 
 
-const JobCard = () => {
+const JobCard = ({job}) => {
   const jobId = "rahulbera9932gmailcom";
   const navigate = useNavigate(); 
 
@@ -23,21 +23,21 @@ const JobCard = () => {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div>
-          <h1 className="text-lg font-semibold text-gray-800">Company Name</h1>
+          <h1 className="text-lg font-semibold text-gray-800">{job.company.name}</h1>
           <p className="text-gray-600 text-sm">India</p>
         </div>
       </div>
       <div className="p-3 border-b border-gray-200">
-        <h1 className="text-xl font-semibold text-gray-800">Title</h1>
-        <p className="text-gray-700 mt-1 text-sm leading-relaxed">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam perferendis voluptatum pariatur.</p>
+        <h1 className="text-xl font-semibold text-gray-800">{job.title}</h1>
+        <p className="text-gray-700 mt-1 text-sm leading-relaxed">{job.description}</p>
       </div>
       <div className="p-3 border-b border-gray-200 flex flex-wrap gap-1">
-        <Badge className="bg-blue-100 text-blue-700 font-semibold py-1 px-2 text-xs">12 Positions</Badge>
-        <Badge className="bg-red-100 text-red-600 font-semibold py-1 px-2 text-xs">Full Time</Badge>
-        <Badge className="bg-purple-100 text-purple-700 font-semibold py-1 px-2 text-xs">12 LPA</Badge>
+        <Badge className="bg-blue-100 text-blue-700 font-semibold py-1 px-2 text-xs">{job.position}</Badge>
+        <Badge className="bg-red-100 text-red-600 font-semibold py-1 px-2 text-xs">{job.jobType}</Badge>
+        <Badge className="bg-purple-100 text-purple-700 font-semibold py-1 px-2 text-xs">{job.salary} LPA</Badge>
       </div>
       <div className="p-3 flex justify-between border-t border-gray-200 bg-gray-50">
-        <Button onClick={() => navigate(`/description/${jobId}`)} variant="outline">Details</Button>
+        <Button onClick={() => navigate(`/description/${job._id}`)} variant="outline">Details</Button>
         <Button className="bg-[#7209b7]">Save For Later</Button>
       </div>
     </div>

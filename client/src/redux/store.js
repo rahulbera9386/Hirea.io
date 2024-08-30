@@ -12,7 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 import authSlice from "./auth/authSlice";
-
+import jobSlice from "./job/jobSlice";
 const persistConfig = {
   key: "root",
   version: 1,
@@ -21,6 +21,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
   auth:authSlice,
+  job:jobSlice
   
 });
 const persistedReducer = persistReducer(persistConfig, reducers);
