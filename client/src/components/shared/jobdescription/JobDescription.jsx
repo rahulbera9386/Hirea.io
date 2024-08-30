@@ -1,18 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { JOB_API_END_POINT } from "../../../utills/constant";
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  APPLICATION_API_END_POINT,
+  JOB_API_END_POINT,
+} from "../../../utills/constant";
+import { useDispatch, useSelector } from "react-redux";
 import { setSingleJob } from "../../../redux/job/jobSlice";
+import { toast } from "sonner";
 const JobDescription = () => {
-  const isApplied = true;
+  //const isApplied = true;
   const params = useParams();
   const jobId = params.id;
-  const dispatch=useDispatch();
-  const {singleJob}=useSelector(store=>store.job);
-  const {user}=useSelector(store=>store.auth);
+  const dispatch = useDispatch();
+  const { singleJob } = useSelector((store) => store.job);
+  const { user } = useSelector((store) => store.auth);
+  const isIntiallyApplied =
+    singleJob?.applications?.some(
+      (application) => application.applicant === user?._id
+    ) || false;
+  const [isApplied, setIsApplied] = useState(isIntiallyApplied);
   //console.log(singleJob)
   //console.log(jobId)
   useEffect(() => {
@@ -24,27 +33,49 @@ const JobDescription = () => {
 
         const apiData = res.data;
         //console.log(apiData);
-        if(apiData.success)
-        {
-          dispatch(setSingleJob(apiData.job))
+        if (apiData.success) {
+          dispatch(setSingleJob(apiData.job));
         }
       } catch (error) {
         console.log(error);
       }
     };
     fetchSingleJob();
-  }, [user._id,dispatch,jobId]);
+  }, [user._id, dispatch, jobId]);
+
+  const applyJobHandler = async () => {
+    try {
+      const res = await axios.get(
+        `${APPLICATION_API_END_POINT}/apply/${jobId}`,
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        setIsApplied(true); // Update the local state
+        const updatedSingleJob = {
+          ...singleJob,
+          applications: [...singleJob.applications, { applicant: user?._id }],
+        };
+        dispatch(setSingleJob(updatedSingleJob)); // helps us to real time UI update
+        toast.success(res.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     if (singleJob?.company?.name) {
       document.title = `${singleJob.company.name} - ${singleJob.title}`;
     }
-  }, [singleJob,jobId]);
+  }, [singleJob, jobId]);
   return (
     <div className="max-w-5xl mx-auto p-8 bg-white shadow-md rounded-md border border-gray-300">
       {/* Job Title Section */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">{singleJob?.company.name}</h1>
+        <h1 className="text-3xl font-bold text-gray-900">
+          {singleJob?.company.name}
+        </h1>
         <p className="text-sm text-gray-500 mt-1">Posted 2 days ago</p>
       </div>
 
@@ -104,13 +135,13 @@ const JobDescription = () => {
       {/* Apply Button */}
       <div className="flex justify-end">
         <Button
-          className={`px-6 py-2 text-white font-semibold rounded-md transition-all duration-300 ${
-            isApplied
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
-          }`}
+          onClick={isApplied ? null : applyJobHandler}
           disabled={isApplied}
-          style={isApplied ? { cursor: "not-allowed" } : {}}
+          className={`rounded-lg ${
+            isApplied
+              ? "bg-gray-600 cursor-not-allowed"
+              : "bg-[#7209b7] hover:bg-[#5f32ad]"
+          }`}
         >
           {isApplied ? "Already Applied" : "Apply Now"}
         </Button>
