@@ -54,6 +54,7 @@ const getCompany = async (req, res) => {
     return res.status(500).json({
       message: "Error While Trying To get company details",
       error: error.message,
+      companies
     });
   }
 };

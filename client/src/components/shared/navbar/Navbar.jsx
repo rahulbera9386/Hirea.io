@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "./../../../utills/constant";
-import { setUser } from '../../../redux/auth/authSlice';
+import { setUser } from "../../../redux/auth/authSlice";
 
 const Navbar = () => {
   const navLinks = [
@@ -55,17 +55,30 @@ const Navbar = () => {
         <div className="flex items-center space-x-6">
           {/* Navigation Links */}
           <ul className="flex space-x-6 text-gray-600">
-            {navLinks.map((item, key) => (
-              <li key={key} className="relative group">
-                <Link
-                  to={item.path}
-                  className="hover:text-primary transition duration-300"
-                >
-                  {item.name}
-                  <span className="block h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-                </Link>
-              </li>
-            ))}
+            {user && user.role === "student" ? (
+              <>
+                {navLinks.map((item, key) => (
+                  <li key={key} className="relative group">
+                    <Link
+                      to={item.path}
+                      className="hover:text-primary transition duration-300"
+                    >
+                      {item.name}
+                      <span className="block h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                    </Link>
+                  </li>
+                ))}
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/admin/companies">Companies</Link>
+                </li>
+                <li>
+                  <Link to="/admin/jobs">Jobs</Link>
+                </li>
+              </>
+            )}
           </ul>
 
           {/* User Login/Avatar */}
@@ -80,10 +93,14 @@ const Navbar = () => {
                 </PopoverTrigger>
                 <PopoverContent className="p-4">
                   <div className="flex flex-col space-y-2">
-                    <Button variant="ghost" as={Link} to="/profile">
-                    <Link to="/profile">View Profile</Link>
-                      
-                    </Button>
+                    {user && user.role === "student" && (
+                      <>
+                        <Button variant="ghost" as={Link} to="/profile">
+                          <Link to="/profile">View Profile</Link>
+                        </Button>
+                      </>
+                    )}
+
                     <Button variant="outline" onClick={logoutHandler}>
                       Logout
                     </Button>

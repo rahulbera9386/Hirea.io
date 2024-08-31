@@ -12,6 +12,9 @@ import Browse from "./components/shared/browse/Browse";
 import Profile from "./components/shared/profile/Profile";
 import Job from "./components/shared/jobs/Job";
 import JobDescription from "./components/shared/jobdescription/JobDescription";
+import Companies from "./components/admin/Companies";
+import CreateCompany from "./components/admin/CreateCompany";
+import CompanySetup from "./components/admin/CompanySetup";
 
 
 const router = createBrowserRouter([
@@ -42,8 +45,19 @@ const router = createBrowserRouter([
   {
 path:"/description/:id",
 element:<JobDescription/>
-  },{
-    
+  },
+  //Admin Part Starts Here
+  {
+    path:"/admin/companies",
+    element:<Companies/>
+  },
+  {
+    path:"/admin/companies/create",
+    element:<CreateCompany/>
+  },
+  {
+    path:"/admin/companies/:id",
+    element:<CompanySetup/>
   }
 ]);
 
