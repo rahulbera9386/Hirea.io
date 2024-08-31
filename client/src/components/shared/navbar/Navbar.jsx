@@ -87,8 +87,8 @@ const Navbar = () => {
               <Popover>
                 <PopoverTrigger>
                   <Avatar className="cursor-pointer">
-                    <AvatarImage src={user.profile.profilePhoto} />
-                    <AvatarFallback>Rahul</AvatarFallback>
+                    <AvatarImage src={user.profile.profilePhoto || "https://e7.pngegg.com/pngimages/753/432/png-clipart-user-profile-2018-in-sight-user-conference-expo-business-default-business-angle-service-thumbnail.png"} />
+                    
                   </Avatar>
                 </PopoverTrigger>
                 <PopoverContent className="p-4">

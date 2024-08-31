@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -15,12 +15,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Edit, Edit2, Pen } from "lucide-react";
+import { Edit, Edit2, MoreHorizontal, Pen } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const CompaniesTable = () => {
-  const {companies}=useSelector(store=>store.company);
-  console.log(companies)
+  const {companies,searchCompanyByText}=useSelector(store=>store.company);
+  //console.log(companies)
+  const [filterCompany,setFilterCompany]=useState(companies)
+  useEffect(()=>{
+   const filteredCompany=companies.filter((company)=>company.name.toLowerCase().includes(searchCompanyByText.toLowerCase()));
+   setFilterCompany(filteredCompany)
+  },[searchCompanyByText,companies])
   return (
     <div>
       <Table>
@@ -35,34 +40,29 @@ const CompaniesTable = () => {
         </TableHeader>
         <TableBody>
           {
-            companies.length <= 0?(<span>You have not created any company yet</span>):(
-              <>
-              {
-              companies.map((company)=>(<tr>
-               
-            <TableCell className="font-medium">
-              <Avatar>
-                <AvatarImage src={company?.logo || "https://www.globalfleet.com/sites/default/files/styles/medium/public/default_images/default-company.jpg?itok=b4eD7gVz"} />
-              </Avatar>
-            </TableCell>
-            <TableCell>{company?.name}</TableCell>
-            <TableCell>{company.createdAt.split("T")[0]}</TableCell>
-            <TableCell className="text-right">
-              <Popover>
-                <PopoverTrigger><Edit className=" "/></PopoverTrigger>
-                <PopoverContent className="w-32">
-                    <div className="flex gap-2 items-center w-fit cursor-pointer">
-                    <Pen/>
-                    <span>Edit</span>
-                    </div>
-                  
-                </PopoverContent>
-              </Popover>
-            </TableCell>
-          
+           filterCompany?.map((company) => (
+            <tr>
+                <TableCell>
+                    <Avatar>
+                        <AvatarImage src={company.logo}/>
+                    </Avatar>
+                </TableCell>
+                <TableCell>{company.name}</TableCell>
+                <TableCell>{company.createdAt.split("T")[0]}</TableCell>
+                <TableCell className="text-right cursor-pointer">
+                    <Popover>
+                        <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
+                        <PopoverContent className="w-32">
+                            <div onClick={()=> navigate(`/admin/companies/${company._id}`)} className='flex items-center gap-2 w-fit cursor-pointer'>
+                                <Edit2 className='w-4' />
+                                <span>Edit</span>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
+                </TableCell>
+            </tr>
 
-                </tr>)
-            )}</>)
+        ))
           }
           
         
