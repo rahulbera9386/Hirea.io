@@ -17,9 +17,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 const corsOptions = {
-    origin:'https://hirea-io-6.onrender.com/',
-    credentials:true
-}
+    origin: 'https://hirea-io-6.onrender.com', // Allow only this origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Enable cookies or authentication headers
+};
 
 app.use(cors(corsOptions));
 
