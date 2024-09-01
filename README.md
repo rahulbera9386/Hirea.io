@@ -13,7 +13,6 @@
 ## Technologies Used
 - **Frontend:**
   - React.js
-  - HTML5/CSS3
   - JavaScript
   - Tailwind CSS
   - Shadcn-UI
