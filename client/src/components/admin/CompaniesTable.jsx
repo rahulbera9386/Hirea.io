@@ -17,11 +17,14 @@ import {
 } from "@/components/ui/popover";
 import { Edit, Edit2, MoreHorizontal, Pen } from "lucide-react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CompaniesTable = () => {
+  
   const {companies,searchCompanyByText}=useSelector(store=>store.company);
   //console.log(companies)
-  const [filterCompany,setFilterCompany]=useState(companies)
+  const [filterCompany,setFilterCompany]=useState(companies);
+  const navigate=useNavigate()
   useEffect(()=>{
    const filteredCompany=companies.filter((company)=>company.name.toLowerCase().includes(searchCompanyByText.toLowerCase()));
    setFilterCompany(filteredCompany)

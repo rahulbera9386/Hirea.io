@@ -15,6 +15,8 @@ import JobDescription from "./components/shared/jobdescription/JobDescription";
 import Companies from "./components/admin/Companies";
 import CreateCompany from "./components/admin/CreateCompany";
 import CompanySetup from "./components/admin/CompanySetup";
+import Jobs from "./components/admin/jobs/Jobs";
+import PostJob from "./components/admin/jobs/PostJob";
 
 
 const router = createBrowserRouter([
@@ -58,6 +60,13 @@ element:<JobDescription/>
   {
     path:"/admin/companies/:id",
     element:<CompanySetup/>
+  },
+  {
+    path:"/admin/jobs",
+    element:<Jobs/>
+  },{
+    path:"/admin/jobs/create",
+    element:<PostJob/>
   }
 ]);
 
