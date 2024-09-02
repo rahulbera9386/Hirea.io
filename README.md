@@ -25,7 +25,7 @@
   - Cloudinary
 
 - **Other Tools:**
-  - Axios for HTTP requests
+  - Axios for API Fetching
   - Mongoose for MongoDB integration
   - Git & GitHub for version control
 
